@@ -8,12 +8,12 @@ function love.load()
   player.speed = 3
   --player.sprite = love.graphics.sprite
   player.spriteSheet = love.graphics.newImage('sprites/rogue.png')
-  player.grid = anim8.newGrid(32, 35, player.spriteSheet:getWidth(), player.spriteSheet:getHeight())
+  player.grid = anim8.newGrid(32, 37, player.spriteSheet:getWidth(), player.spriteSheet:getHeight(), 0, 0, 1)
   player.animations = {}
-  player.animations.up = anim8.newAnimation(player.grid('1-3', 4), 0.22)
-  player.animations.down = anim8.newAnimation(player.grid('1-3', 1), 0.22)
-  player.animations.left = anim8.newAnimation(player.grid('1-3', 2), 0.22)
-  player.animations.right = anim8.newAnimation(player.grid('1-3', 3), 0.22) 
+  player.animations.up = anim8.newAnimation(player.grid('1-3', 4), 0.20)
+  player.animations.down = anim8.newAnimation(player.grid('1-3', 1), 0.20)
+  player.animations.left = anim8.newAnimation(player.grid('1-3', 2), 0.20)
+  player.animations.right = anim8.newAnimation(player.grid('1-3', 3), 0.20) 
 
   player.anim = player.animations.left
 
