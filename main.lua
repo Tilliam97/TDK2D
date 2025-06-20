@@ -1,13 +1,20 @@
 function love.load()
-  anim8 = require 'libraries/anim8'
-  sti = require 'libraries/sti'
-  love.graphics.setDefaultFilter("nearest", "nearest")
+  camera = require 'libraries/camera'
+  cam = camera()
 
+  anim8 = require 'libraries/anim8'
+
+  sti = require 'libraries/sti'
   gameMap = sti('maps/starterMap.lua')
 
+  love.graphics.setDefaultFilter("nearest", "nearest")
+
+  width = love.graphics.getWidth()
+  height = love.graphics.getHeight()
+
   player = {}
-  player.x = 400
-  player.y = 200
+  player.x = width / 2
+  player.y = height / 2
   player.speed = 3
   --player.sprite = love.graphics.sprite
   --player.spriteSheet = love.graphics.newImage('sprites/rogue_sat.png')
@@ -24,8 +31,6 @@ function love.load()
   player.anim = player.animations.down
 
   --background = love.graphics.newImage('sprites/background.png')
-  width = love.graphics.getWidth()
-  height = love.graphics.getHeight()
 end 
 
 function love.update(dt)
@@ -56,16 +61,64 @@ function love.update(dt)
   end
 
   player.anim:update(dt)
+
+  cam:lookAt(player.x, player.y)
+  
+  local halfW = width / 2 
+  local halfH = height / 2
+
+  
+  if cam.x < halfW then
+    cam.x = halfW
+  end
+  
+  if cam.y < halfH then
+    cam.y = halfH
+  end
+  
+  local mapWidth = gameMap.width * 32
+  local mapHeight = gameMap.height * 32
+  
+  --Right Border Camera Buffer
+  if cam.x > (mapWidth - width/2) then
+    cam.x = (mapWidth - width/2)
+  end
+  
+  --Bottom Border Camera Buffer
+  if cam.y > (mapHeight - height/2) then
+    cam.y = (mapHeight - height/2)
+  end
+
+  
 end
 
 function love.draw()
-  --   for y = 0, height - 1, background:getHeight() do
-  --     for x = 0, width -1, background:getWidth() do
-  --     love.graphics.draw(background, x, y)
-  --   end
-  -- end
-  gameMap:draw()
-  --love.graphics.draw(background, 0, 0)
-  player.anim:draw(player.spriteSheet, player.x, player.y, nil, 2)
-  -- love.window.setFullscreen(true) makes the game fullscreen
+--How to get access to the layers in the group
+-- local y = 10
+-- for k,v in pairs(gameMap.layers) do
+--   love.graphics.print(string.format("%s (%s)", k, v.type), 10, y)
+--   y = y + 20
+--   --debug.debug()
+-- end
+
+  cam:attach()
+    --   for y = 0, height - 1, background:getHeight() do
+    --     for x = 0, width -1, background:getWidth() do
+    --     love.graphics.draw(background, x, y)
+    --   end
+    -- end
+    gameMap:drawLayer(gameMap.layers["Ground"])
+    gameMap:drawLayer(gameMap.layers["Trees.Trees_1"])
+    gameMap:drawLayer(gameMap.layers["Trees.Trees_2"])
+    gameMap:drawLayer(gameMap.layers["Trees.Trees_3"])
+    gameMap:drawLayer(gameMap.layers["Trees.Trees_4"])
+    gameMap:drawLayer(gameMap.layers["Trees.Trees_5"])
+    gameMap:drawLayer(gameMap.layers["Shrubs"])
+    gameMap:drawLayer(gameMap.layers["Shrubs_2"])
+    gameMap:drawLayer(gameMap.layers["Camp"])
+    gameMap:drawLayer(gameMap.layers["Bridge"])
+    --love.graphics.draw(background, 0, 0)
+    player.anim:draw(player.spriteSheet, player.x, player.y, nil, 2, nil, --[[offset x , offset y]] 21, 24)
+    -- love.window.setFullscreen(true) makes the game fullscreen
+  cam:detach()
 end
