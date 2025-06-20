@@ -1,8 +1,11 @@
+local Player = require 'Player'
+
 function love.load()
+
   camera = require 'libraries/camera'
   cam = camera()
 
-  anim8 = require 'libraries/anim8'
+  --anim8 = require 'libraries/anim8'
 
   sti = require 'libraries/sti'
   gameMap = sti('maps/starterMap.lua')
@@ -12,55 +15,57 @@ function love.load()
   width = love.graphics.getWidth()
   height = love.graphics.getHeight()
 
-  player = {}
-  player.x = width / 2
-  player.y = height / 2
-  player.speed = 3
-  --player.sprite = love.graphics.sprite
-  --player.spriteSheet = love.graphics.newImage('sprites/rogue_sat.png')
-  player.spriteSheet = love.graphics.newImage('sprites/rogue_sat.png')
-  --player.grid = anim8.newGrid(325, 380, player.spriteSheet:getWidth(), player.spriteSheet:getHeight(), 0, 0, 6)
-  player.grid = anim8.newGrid(42, 48, player.spriteSheet:getWidth(), player.spriteSheet:getHeight(), 0, 0, 1.2)
+  player = Player:new(--[[player.x]]width*0.5, --[[player.y]]height*0.5, --[[speed]]300)
+  -- player = {}
+  -- player.x = width / 2
+  -- player.y = height / 2
+  -- player.speed = 5
+  -- --player.sprite = love.graphics.sprite
+  -- --player.spriteSheet = love.graphics.newImage('sprites/rogue_sat.png')
+  -- player.spriteSheet = love.graphics.newImage('sprites/rogue_sat.png')
+  -- --player.grid = anim8.newGrid(325, 380, player.spriteSheet:getWidth(), player.spriteSheet:getHeight(), 0, 0, 6)
+  -- player.grid = anim8.newGrid(42, 48, player.spriteSheet:getWidth(), player.spriteSheet:getHeight(), 0, 0, 1.2)
 
-  player.animations = {}
-  player.animations.up = anim8.newAnimation(player.grid('1-3', 4), 0.20)
-  player.animations.down = anim8.newAnimation(player.grid('1-3', 1), 0.20)
-  player.animations.left = anim8.newAnimation(player.grid('1-3', 2), 0.20)
-  player.animations.right = anim8.newAnimation(player.grid('1-3', 3), 0.20) 
+  -- player.animations = {}
+  -- player.animations.up = anim8.newAnimation(player.grid('1-3', 4), 0.20)
+  -- player.animations.down = anim8.newAnimation(player.grid('1-3', 1), 0.20)
+  -- player.animations.left = anim8.newAnimation(player.grid('1-3', 2), 0.20)
+  -- player.animations.right = anim8.newAnimation(player.grid('1-3', 3), 0.20) 
 
-  player.anim = player.animations.down
+  -- player.anim = player.animations.down
 
   --background = love.graphics.newImage('sprites/background.png')
 end 
 
 function love.update(dt)
-  local isMoving = false
+  player:update(dt)
+  -- local isMoving = false
 
-  if love.keyboard.isDown("right") then 
-    isMoving = true
-    player.x = player.x + player.speed
-    player.anim = player.animations.right
-  end
-  if love.keyboard.isDown("left") then
-    isMoving = true 
-    player.x = player.x - player.speed
-    player.anim = player.animations.left
-  end
-  if love.keyboard.isDown("up") then 
-    isMoving = true
-    player.y = player.y - player.speed
-    player.anim = player.animations.up
-  end
-  if love.keyboard.isDown("down") then 
-    isMoving = true
-    player.y = player.y + player.speed
-    player.anim = player.animations.down
-  end
-  if isMoving == false then
-    player.anim:gotoFrame(2)
-  end
+  -- if love.keyboard.isDown("right") then 
+  --   isMoving = true
+  --   player.x = player.x + player.speed
+  --   player.anim = player.animations.right
+  -- end
+  -- if love.keyboard.isDown("left") then
+  --   isMoving = true 
+  --   player.x = player.x - player.speed
+  --   player.anim = player.animations.left
+  -- end
+  -- if love.keyboard.isDown("up") then 
+  --   isMoving = true
+  --   player.y = player.y - player.speed
+  --   player.anim = player.animations.up
+  -- end
+  -- if love.keyboard.isDown("down") then 
+  --   isMoving = true
+  --   player.y = player.y + player.speed
+  --   player.anim = player.animations.down
+  -- end
+  -- if isMoving == false then
+  --   player.anim:gotoFrame(2)
+  -- end
 
-  player.anim:update(dt)
+  -- player.anim:update(dt)
 
   cam:lookAt(player.x, player.y)
   
@@ -76,20 +81,18 @@ function love.update(dt)
     cam.y = halfH
   end
   
-  local mapWidth = gameMap.width * 32
-  local mapHeight = gameMap.height * 32
+  local mapWidth = gameMap.width * gameMap.tilewidth
+  local mapHeight = gameMap.height * gameMap.tileheight
   
   --Right Border Camera Buffer
   if cam.x > (mapWidth - width/2) then
-    cam.x = (mapWidth - width/2)
+    cam.x = math.floor((mapWidth - width/2))
   end
   
   --Bottom Border Camera Buffer
   if cam.y > (mapHeight - height/2) then
-    cam.y = (mapHeight - height/2)
+    cam.y = math.floor((mapHeight - height/2))
   end
-
-  
 end
 
 function love.draw()
@@ -117,8 +120,9 @@ function love.draw()
     gameMap:drawLayer(gameMap.layers["Shrubs_2"])
     gameMap:drawLayer(gameMap.layers["Camp"])
     gameMap:drawLayer(gameMap.layers["Bridge"])
+    player:draw()
     --love.graphics.draw(background, 0, 0)
-    player.anim:draw(player.spriteSheet, player.x, player.y, nil, 2, nil, --[[offset x , offset y]] 21, 24)
+    --player.anim:draw(player.spriteSheet, player.x, player.y, nil, 2, nil, --[[offset x , offset y]] 21, 24)
     -- love.window.setFullscreen(true) makes the game fullscreen
   cam:detach()
 end
