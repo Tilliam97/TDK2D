@@ -1,6 +1,9 @@
 function love.load()
   anim8 = require 'libraries/anim8'
+  sti = require 'libraries/sti'
   love.graphics.setDefaultFilter("nearest", "nearest")
+
+  gameMap = sti('maps/starterMap.lua')
 
   player = {}
   player.x = 400
@@ -20,7 +23,7 @@ function love.load()
 
   player.anim = player.animations.down
 
-  background = love.graphics.newImage('sprites/background.png')
+  --background = love.graphics.newImage('sprites/background.png')
   width = love.graphics.getWidth()
   height = love.graphics.getHeight()
 end 
@@ -56,11 +59,12 @@ function love.update(dt)
 end
 
 function love.draw()
-    for y = 0, height - 1, background:getHeight() do
-      for x = 0, width -1, background:getWidth() do
-      love.graphics.draw(background, x, y)
-    end
-  end
+  --   for y = 0, height - 1, background:getHeight() do
+  --     for x = 0, width -1, background:getWidth() do
+  --     love.graphics.draw(background, x, y)
+  --   end
+  -- end
+  gameMap:draw()
   --love.graphics.draw(background, 0, 0)
   player.anim:draw(player.spriteSheet, player.x, player.y, nil, 2)
   -- love.window.setFullscreen(true) makes the game fullscreen

@@ -22,7 +22,7 @@ return {
       spacing = 0,
       margin = 0,
       columns = 26,
-      image = "../../Downloads/EPIC RPG World Pack-[FREE Demo]Grass Land 2.0/EPIC RPG World Pack - [FREE Demo]Grass Land 2.0-REWORK/Tilesets and props/nature.png",
+      image = "/../../../maps/nature.png",
       imagewidth = 832,
       imageheight = 672,
       objectalignment = "unspecified",
