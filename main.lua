@@ -8,7 +8,7 @@ function love.load()
   --anim8 = require 'libraries/anim8'
 
   sti = require 'libraries/sti'
-  gameMap = sti('maps/starterMap.lua')
+  gameMap = sti('/maps/Tutorial_map.lua')
 
   love.graphics.setDefaultFilter("nearest", "nearest")
 
@@ -23,7 +23,7 @@ function love.load()
   -- --player.sprite = love.graphics.sprite
   -- --player.spriteSheet = love.graphics.newImage('sprites/rogue_sat.png')
   -- player.spriteSheet = love.graphics.newImage('sprites/rogue_sat.png')
-  -- --player.grid = anim8.newGrid(325, 380, player.spriteSheet:getWidth(), player.spriteSheet:getHeight(), 0, 0, 6)
+  -- --player.grid = anim8.newGrid(325, 380, player.spriteSheet:getWidth(), player.spriteSheet:getHeight(), 0, 0, 6)  --ALL PLAYER LOGIC IN PLAYER.LUA
   -- player.grid = anim8.newGrid(42, 48, player.spriteSheet:getWidth(), player.spriteSheet:getHeight(), 0, 0, 1.2)
 
   -- player.animations = {}
@@ -72,12 +72,11 @@ function love.update(dt)
   local halfW = width / 2 
   local halfH = height / 2
 
-  
   if cam.x < halfW then
     cam.x = halfW
   end
   
-  if cam.y < halfH then
+  if cam.y < halfH then           --need to abstract this camera logic out in the future 
     cam.y = halfH
   end
   
@@ -93,10 +92,11 @@ function love.update(dt)
   if cam.y > (mapHeight - height/2) then
     cam.y = math.floor((mapHeight - height/2))
   end
+
 end
 
 function love.draw()
---How to get access to the layers in the group
+--How to get access to the layers in the group by printing them to debug 
 -- local y = 10
 -- for k,v in pairs(gameMap.layers) do
 --   love.graphics.print(string.format("%s (%s)", k, v.type), 10, y)
@@ -105,21 +105,32 @@ function love.draw()
 -- end
 
   cam:attach()
-    --   for y = 0, height - 1, background:getHeight() do
+    --   for y = 0, height - 1, background:getHeight() do  [[loops over an image to display it as the background over the entire window size]]
     --     for x = 0, width -1, background:getWidth() do
     --     love.graphics.draw(background, x, y)
     --   end
     -- end
+    -- gameMap:drawLayer(gameMap.layers["Ground"])
+    -- gameMap:drawLayer(gameMap.layers["Trees.Trees_1"])
+    -- gameMap:drawLayer(gameMap.layers["Trees.Trees_2"])
+    -- gameMap:drawLayer(gameMap.layers["Trees.Trees_3"])     starter Map
+    -- gameMap:drawLayer(gameMap.layers["Trees.Trees_4"])
+    -- gameMap:drawLayer(gameMap.layers["Trees.Trees_5"])
+    -- gameMap:drawLayer(gameMap.layers["Shrubs"])
+    -- gameMap:drawLayer(gameMap.layers["Shrubs_2"])
+    -- gameMap:drawLayer(gameMap.layers["Camp"])
+    -- gameMap:drawLayer(gameMap.layers["Bridge"])
+
     gameMap:drawLayer(gameMap.layers["Ground"])
+    gameMap:drawLayer(gameMap.layers["Shade"])
+    gameMap:drawLayer(gameMap.layers["Trees.Shade"])
+    gameMap:drawLayer(gameMap.layers["Trees.Grass"])
     gameMap:drawLayer(gameMap.layers["Trees.Trees_1"])
-    gameMap:drawLayer(gameMap.layers["Trees.Trees_2"])
-    gameMap:drawLayer(gameMap.layers["Trees.Trees_3"])
-    gameMap:drawLayer(gameMap.layers["Trees.Trees_4"])
-    gameMap:drawLayer(gameMap.layers["Trees.Trees_5"])
-    gameMap:drawLayer(gameMap.layers["Shrubs"])
-    gameMap:drawLayer(gameMap.layers["Shrubs_2"])
+    gameMap:drawLayer(gameMap.layers["Cliff"])
+    gameMap:drawLayer(gameMap.layers["Cliff_Shade"])
     gameMap:drawLayer(gameMap.layers["Camp"])
-    gameMap:drawLayer(gameMap.layers["Bridge"])
+    gameMap:drawLayer(gameMap.layers["Bridge_Exit"])
+    gameMap:drawLayer(gameMap.layers["Cobble_Exit"])
     player:draw()
     --love.graphics.draw(background, 0, 0)
     --player.anim:draw(player.spriteSheet, player.x, player.y, nil, 2, nil, --[[offset x , offset y]] 21, 24)
