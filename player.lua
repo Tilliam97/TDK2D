@@ -33,22 +33,22 @@ function Player:update(dt)
   local vx = 0 --collider velocity x direction
   local vy = 0 --collider velocity y direction
 
-  if love.keyboard.isDown("right") then 
+  if love.keyboard.isDown("right") or love.keyboard.isDown("d") then 
     isMoving = true
     vx = self.speed
     self.anim = self.animations.right
   end
-  if love.keyboard.isDown("left") then
+  if love.keyboard.isDown("left") or love.keyboard.isDown("a") then
     isMoving = true 
     vx = -self.speed
     self.anim = self.animations.left
   end
-  if love.keyboard.isDown("up") then 
+  if love.keyboard.isDown("up") or love.keyboard.isDown("w") then 
     isMoving = true
     vy = -self.speed
     self.anim = self.animations.up
   end
-  if love.keyboard.isDown("down") then 
+  if love.keyboard.isDown("down") or love.keyboard.isDown("s") then 
     isMoving = true
     vy = self.speed
     self.anim = self.animations.down
