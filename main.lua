@@ -16,10 +16,10 @@ function love.load()
   height = love.graphics.getHeight()
 
   player = Player:new(--[[player.x]]width*0.5, --[[player.y]]height*0.5, --[[speed]]300)
-  -- player = {}
+  --player = {}
   -- player.x = width / 2
   -- player.y = height / 2
-  -- player.speed = 5
+  -- player.speed = 500
   -- --player.sprite = love.graphics.sprite
   -- --player.spriteSheet = love.graphics.newImage('sprites/rogue_sat.png')
   -- player.spriteSheet = love.graphics.newImage('sprites/rogue_sat.png')
@@ -101,7 +101,7 @@ function love.draw()
 -- for k,v in pairs(gameMap.layers) do
 --   love.graphics.print(string.format("%s (%s)", k, v.type), 10, y)
 --   y = y + 20
---   --debug.debug()
+  --debug.debug()
 -- end
 
   cam:attach()
@@ -123,15 +123,15 @@ function love.draw()
 
     gameMap:drawLayer(gameMap.layers["Ground"])
     gameMap:drawLayer(gameMap.layers["Shade"])
+    player:draw()
+    gameMap:drawLayer(gameMap.layers["Trees.Trees_1"])
     gameMap:drawLayer(gameMap.layers["Trees.Shade"])
     gameMap:drawLayer(gameMap.layers["Trees.Grass"])
-    gameMap:drawLayer(gameMap.layers["Trees.Trees_1"])
     gameMap:drawLayer(gameMap.layers["Cliff"])
     gameMap:drawLayer(gameMap.layers["Cliff_Shade"])
     gameMap:drawLayer(gameMap.layers["Camp"])
     gameMap:drawLayer(gameMap.layers["Bridge_Exit"])
     gameMap:drawLayer(gameMap.layers["Cobble_Exit"])
-    player:draw()
     --love.graphics.draw(background, 0, 0)
     --player.anim:draw(player.spriteSheet, player.x, player.y, nil, 2, nil, --[[offset x , offset y]] 21, 24)
     -- love.window.setFullscreen(true) makes the game fullscreen
