@@ -8,22 +8,22 @@ function love.load()
   --anim8 = require 'libraries/anim8'
 
   sti = require 'libraries/sti'
-  gameMap = sti('/maps/Tutorial_map.lua')
+  gameMap = sti('maps/Tutorial_map.lua')
 
   love.graphics.setDefaultFilter("nearest", "nearest")
 
   width = love.graphics.getWidth()
   height = love.graphics.getHeight()
 
-  player = Player:new(--[[player.x]]width*0.5, --[[player.y]]height*0.5, --[[speed]]300)
-  --player = {}
+  player = Player:new(--[[player.x]]width*0.5, --[[player.y]]height*0.5, --[[speed]]250)
+  -- player = {}
   -- player.x = width / 2
   -- player.y = height / 2
   -- player.speed = 500
   -- --player.sprite = love.graphics.sprite
   -- --player.spriteSheet = love.graphics.newImage('sprites/rogue_sat.png')
   -- player.spriteSheet = love.graphics.newImage('sprites/rogue_sat.png')
-  -- --player.grid = anim8.newGrid(325, 380, player.spriteSheet:getWidth(), player.spriteSheet:getHeight(), 0, 0, 6)  --ALL PLAYER LOGIC IN PLAYER.LUA
+  -- --player.grid = anim8.newGrid(325, 380, player.spriteSheet:getWidth(), player.spriteSheet:getHeight(), 0, 0, 6)
   -- player.grid = anim8.newGrid(42, 48, player.spriteSheet:getWidth(), player.spriteSheet:getHeight(), 0, 0, 1.2)
 
   -- player.animations = {}
@@ -72,11 +72,12 @@ function love.update(dt)
   local halfW = width / 2 
   local halfH = height / 2
 
+  
   if cam.x < halfW then
     cam.x = halfW
   end
   
-  if cam.y < halfH then           --need to abstract this camera logic out in the future 
+  if cam.y < halfH then
     cam.y = halfH
   end
   
@@ -92,11 +93,10 @@ function love.update(dt)
   if cam.y > (mapHeight - height/2) then
     cam.y = math.floor((mapHeight - height/2))
   end
-
 end
 
 function love.draw()
---How to get access to the layers in the group by printing them to debug 
+--How to get access to the layers in the group
 -- local y = 10
 -- for k,v in pairs(gameMap.layers) do
 --   love.graphics.print(string.format("%s (%s)", k, v.type), 10, y)
