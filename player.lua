@@ -9,6 +9,7 @@ local Player = class('Player')
 function Player:initialize(x, y, speed)
   self.collider = world:newBSGRectangleCollider(400, 250, 42, 80, 11)
   self.collider:setFixedRotation(true)
+	self.collider:setCollisionClass('Player')
   self.x = math.floor(x)
   self.y = math.floor(y)
   self.speed = speed
@@ -69,7 +70,7 @@ end
 
 function Player:draw()
    self.anim:draw(self.spriteSheet, self.x, self.y, nil, 2, nil, --[[offset x , offset y]] 21, 24)
-   world:draw()
+   --world:draw()
 end
 
 return Player
