@@ -10,6 +10,7 @@ function love.load()
   sti = require 'libraries/sti'
   gameMap = sti('maps/Tutorial_map.lua')
 
+ 
   world:addCollisionClass('World')
   world:addCollisionClass('Player')
 
@@ -90,11 +91,13 @@ function love.load()
   --background = love.graphics.newImage('sprites/background.png')
 end 
 
+
+
 function love.update(dt)
   player:update(dt)
   
 
-  cam:lookAt(player.x, player.y)
+  playerLoc = cam:lookAt(player.x, player.y)
   
   local halfW = width / 2 
   local halfH = height / 2
@@ -120,7 +123,36 @@ function love.update(dt)
   if cam.y > (mapHeight - height/2) then
     cam.y = math.floor((mapHeight - height/2))
   end
+
+--  --MINI MAP
+-- mapSize = 250
+
+-- local scaleX = mapSize / mapWidth
+-- local scaleY = mapSize / mapHeight
+-- local scale = math.min(scaleX, scaleY)  -- maintain aspect ratio
+
+-- canvas = love.graphics.newCanvas(mapSize, mapSize)
+-- love.graphics.setCanvas(canvas)
+--   love.graphics.clear()
+
+--   love.graphics.push()
+--   love.graphics.scale(scale, scale)
+
+--   for _, layer in ipairs(gameMap.layers) do 
+--     if layer.type == "tilelayer" then
+--       --gameMap:drawLayer(gameMap.layers["Cliff"])
+--       gameMap:drawLayer(gameMap.layers[layer.name])
+--     end
+--   end
+
+--   love.graphics.circle("fill", player.x + 16, player.y + 16 , 2 / scale)
+
+--   love.graphics.pop()
+
+-- love.graphics.setCanvas()
 end
+
+
 
 function love.draw()
 --How to get access to the layers in the group
@@ -130,6 +162,7 @@ function love.draw()
 --   y = y + 20
 --   --debug.debug()
 -- end
+
 
 
   cam:attach()
@@ -155,4 +188,11 @@ function love.draw()
     --player.anim:draw(player.spriteSheet, player.x, player.y, nil, 2, nil, --[[offset x , offset y]] 21, 24)
     -- love.window.setFullscreen(true) makes the game fullscreen
   cam:detach()
+
+  -- MINI MAP DRAW
+  -- draw the minimap in screen corner (e.g., top-right)
+  --love.graphics.setColor(1, 1, 1, 1)
+  --love.graphics.draw(canvas, love.graphics.getWidth() - mapSize - 10, 10)
+  --love.graphics.print(string.format("%s (%s)", player.x, player.y))
+  --love.graphics.print(string.format("%s (%s)", player.y, 80, 50))
 end
