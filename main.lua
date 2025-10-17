@@ -67,7 +67,7 @@ function love.load()
           --Convert to circle 
           local centerX = obj.x + obj.width / 2
           local centerY = obj.y + obj.height / 2
-          local diameter = (67.6923 + 42.3077) / 2
+          local diameter = (67.6923 + 42.3077) / 2 --nums aren't arbitrary got from tiled map data for Camp_Bounds
 
           local camp = world:newCircleCollider(centerX, centerY, diameter/2) 
           camp:setType('static')
