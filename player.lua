@@ -1,7 +1,7 @@
 class = require 'libraries/middleclass'
 anim8 = require 'libraries/anim8'
 wf = require 'libraries/windfield'
-
+config = require 'conf'
 world = wf.newWorld(0,0)
 
 local Player = class('Player')

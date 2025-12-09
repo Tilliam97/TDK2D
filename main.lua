@@ -1,4 +1,5 @@
 local Player = require 'Player'
+local settings = require 'conf'
 
 function love.load()
 
@@ -89,7 +90,7 @@ function love.load()
   player = Player:new(--[[player.x]]width*0.5, --[[player.y]]height*0.5, --[[speed]]250)
  
   --background = love.graphics.newImage('sprites/background.png')
-end 
+  end
 
 
 
@@ -150,6 +151,9 @@ function love.update(dt)
 --   love.graphics.pop()
 
 -- love.graphics.setCanvas()
+if love.keyboard.isDown("space") then
+    love.window.showMessageBox("Game Paused", "Press OK to resume", "info")
+  end
 end
 
 
